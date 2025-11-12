@@ -1,0 +1,104 @@
+<div class="dashboard-container">
+  <div class="dashboard-header">
+    <h1>Emissions Dashboard</h1>
+    <a routerLink="/" class="home-link">← Back to Home</a>
+  </div>
+  
+  <div class="filters">
+    <div class="filter-group">
+      <label for="country">Country:</label>
+      <select id="country" [(ngModel)]="filter.country" (change)="onFilterChange()">
+        <option [ngValue]="undefined">All Countries</option>
+        <option *ngFor="let country of countries" [value]="country">{{ country }}</option>
+      </select>
+    </div>
+
+    <div class="filter-group">
+      <label for="activity">Activity:</label>
+      <select id="activity" [(ngModel)]="filter.activity" (change)="onFilterChange()">
+        <option [ngValue]="undefined">All Activities</option>
+        <option *ngFor="let activity of activities" [value]="activity">{{ activity }}</option>
+      </select>
+    </div>
+
+    <div class="filter-group">
+      <label for="emissionType">Emission Type:</label>
+      <select id="emissionType" [(ngModel)]="filter.emission_type" (change)="onFilterChange()">
+        <option [ngValue]="undefined">All Types</option>
+        <option *ngFor="let type of emissionTypes" [value]="type">{{ type }}</option>
+      </select>
+    </div>
+
+    <div class="filter-group">
+      <label for="year">Select Year:</label>
+      <select id="year" [(ngModel)]="filter.year" (change)="onFilterChange()">
+        <option [ngValue]="undefined">All Years</option>
+        <option *ngFor="let year of availableYears" [value]="year">{{ year }}</option>
+      </select>
+    </div>
+
+    <button (click)="resetFilters()" class="reset-btn">Reset Filters</button>
+  </div>
+
+  <div *ngIf="isLoading" class="loading">
+    <div class="spinner"></div>
+    <p>Loading data...</p>
+  </div>
+  
+  <div *ngIf="!isLoading && error" class="error-message">
+    <p>{{ error }}</p>
+    <button (click)="loadEmissions()" class="retry-btn">Retry</button>
+  </div>
+
+  <div *ngIf="!isLoading && !error" class="dashboard-content">
+    <div class="chart-container">
+      <h2>Emissions Over Time</h2>
+      <div class="chart-status">
+        Status: {{ emissions.length ? 'Data loaded' : 'No data' }} | Points: {{ emissions.length }}
+      </div>
+      
+      <div class="chart-wrapper" style="position: relative; height: 500px; width: 100%;">
+        <canvas #chartCanvas style="display: block; width: 100%; height: 100%;"></canvas>
+        
+        <div *ngIf="isLoading" class="loading-overlay" style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(255, 255, 255, 0.8); display: flex; justify-content: center; align-items: center; flex-direction: column;">
+          <div class="spinner"></div>
+          <p>Loading chart data...</p>
+        </div>
+        
+        <div *ngIf="!isLoading && (!emissions || emissions.length === 0)" class="no-data" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+          No data available to display
+        </div>
+      </div>
+    </div>
+
+    <div class="data-table">
+      <h2>Emission Data</h2>
+      <div class="table-responsive">
+        <table *ngIf="emissions.length > 0">
+          <thead>
+            <tr>
+              <th>Country</th>
+              <th>Activity</th>
+              <th>Emission Type</th>
+              <th>Year</th>
+              <th>Emissions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let emission of emissions">
+              <td>{{ emission.country }}</td>
+              <td>{{ emission.activity }}</td>
+              <td>{{ emission.emission_type }}</td>
+              <td>{{ emission.year }}</td>
+              <td class="text-right">{{ emission.emissions | number:'1.2-2' }}</td>
+            </tr>
+          </tbody>
+        </table>
+        
+        <div *ngIf="emissions.length === 0" class="no-data">
+          <p>No data available for the selected filters.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

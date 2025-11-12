@@ -1,0 +1,259 @@
+@use 'sass:color';
+
+$primary: #2563eb;
+$secondary: #64748b;
+$accent: #10b981;
+$background: #f8fafc;
+$card-bg: #ffffff;
+$border: #e2e8f0;
+$text-dark: #1e293b;
+$text-light: #64748b;
+$danger: #ef4444;
+
+.dashboard-container {
+  font-family: 'Inter', sans-serif;
+  color: $text-dark;
+  background-color: $background;
+  padding: 2rem;
+  min-height: 100vh;
+}
+
+h1 {
+  text-align: center;
+  color: $primary;
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 2rem;
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.2rem;
+  background: $card-bg;
+  border: 1px solid $border;
+  border-radius: 12px;
+  padding: 1.2rem 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+  margin-bottom: 2rem;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  min-width: 160px;
+
+  label {
+    font-size: 0.9rem;
+    color: $text-light;
+    margin-bottom: 0.3rem;
+  }
+
+  select {
+    padding: 0.5rem 0.8rem;
+    border: 1px solid $border;
+    border-radius: 8px;
+    background-color: $background;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+
+    &:focus {
+      outline: none;
+      border-color: $primary;
+      box-shadow: 0 0 0 3px rgba($primary, 0.15);
+    }
+  }
+}
+
+.reset-btn {
+  background-color: $danger;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.6rem 1.2rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  margin-top: auto;
+  height: fit-content;
+
+  &:hover {
+    background-color: color.scale($danger, $lightness: -8%);
+  }
+}
+
+.chart-container {
+  background: $card-bg;
+  border: 1px solid $border;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+  margin-bottom: 2rem;
+
+  h2 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: $primary;
+    margin-bottom: 1rem;
+  }
+
+  .chart-wrapper {
+    position: relative;
+    width: 100%;
+    height: 400px;
+    min-height: 300px;
+    background-color: #fff;
+    border: 1px solid $border;
+    border-radius: 4px;
+    overflow: hidden;
+
+    canvas {
+      display: block;
+      width: 100% !important;
+      height: 100% !important;
+    }
+  }
+
+  .loading-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    z-index: 1;
+    
+    .spinner {
+      display: inline-block;
+      width: 40px;
+      height: 40px;
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid #3498db;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    
+    p {
+      margin-top: 10px;
+      color: #666;
+    }
+  }
+  
+  .no-data {
+    text-align: center;
+    padding: 40px;
+    color: #666;
+  }
+}
+
+.data-table {
+  background: $card-bg;
+  border: 1px solid $border;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+  padding: 1.5rem;
+
+  h2 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: $primary;
+    margin-bottom: 1rem;
+  }
+
+  .table-responsive {
+    overflow-x: auto;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+
+    th, td {
+      padding: 0.75rem 1rem;
+      text-align: left;
+      border-bottom: 1px solid $border;
+    }
+
+    th {
+      color: $secondary;
+      font-weight: 600;
+      background-color: #f1f5f9;
+    }
+
+    td {
+      color: $text-dark;
+      font-size: 0.95rem;
+    }
+
+    tr:hover {
+      background-color: #f9fafb;
+    }
+  }
+
+  .no-data {
+    text-align: center;
+    padding: 1.5rem;
+    color: $text-light;
+  }
+}
+
+.loading {
+  text-align: center;
+  background: $card-bg;
+  border-radius: 12px;
+  padding: 2rem;
+
+  .spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid rgba(0, 0, 0, 0.1);
+    border-top: 3px solid $primary;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 1rem;
+  }
+}
+
+.error-message {
+  text-align: center;
+  color: $danger;
+
+  .retry-btn {
+    background-color: color.scale($primary, $lightness: -8%);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 0.6rem 1.2rem;
+    font-weight: 500;
+    margin-top: 1rem;
+    cursor: pointer;
+
+    &:hover {
+      background-color: color.adjust($primary, $lightness: -8%);
+    }
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+:host ::ng-deep .chartjs-render-monitor {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+@media (max-width: 768px) {
+  .filters {
+    flex-direction: column;
+  }
+
+  .filter-group {
+    width: 100%;
+  }
+
+  .reset-btn {
+    width: 100%;
+  }
+}
