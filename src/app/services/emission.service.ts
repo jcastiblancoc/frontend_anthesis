@@ -1,8 +1,8 @@
 import { Injectable, inject } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, catchError, map, of, tap } from 'rxjs';
 import { Emission } from '../models/emission.model';
-import { environment } from '../../environments/environment';
+import { API_CONFIG } from '../config/api.config';
 
 export interface EmissionFilter {
   country?: string | null;
@@ -15,7 +15,7 @@ export interface EmissionFilter {
   providedIn: 'root'
 })
 export class EmissionService {
-  private readonly apiUrl = `${environment.apiUrl}/emissions/`;
+  private readonly apiUrl = `${API_CONFIG.baseUrl}${API_CONFIG.endpoints.emissions}`;
   private readonly http = inject(HttpClient);
   private cache: Emission[] | null = null;
 
@@ -31,16 +31,11 @@ export class EmissionService {
       });
     }
 
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Accept': 'application/json'
-    });
-
     if (this.cache && !isFiltered) {
       return of([...this.cache]);
     }
 
-    return this.http.get<Emission[]>(this.apiUrl, { params, headers }).pipe(
+    return this.http.get<Emission[]>(this.apiUrl, { params }).pipe(
       tap(emissions => {
         if (!isFiltered) {
           this.cache = [...emissions];

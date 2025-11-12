@@ -53,20 +53,6 @@ import { CommonModule } from '@angular/common';
       margin-bottom: 2rem;
     }
     
-    .logo {
-      width: 50px;
-      height: 50px;
-      background-color: #2ecc71;
-      color: white;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.8rem;
-      font-weight: bold;
-      border-radius: 12px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    }
-    
     .content {
       max-width: 800px;
       margin: 0 auto;
@@ -171,38 +157,11 @@ import { CommonModule } from '@angular/common';
     }
     
     .jc-logo {
-      height: 100px;  /* Increased from 50px */
+      height: 100px;
       width: auto;
       border-radius: 8px;
-      object-fit: contain;  /* Ensures the image maintains its aspect ratio */
+      object-fit: contain;
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
-    
-    .stats {
-      display: flex;
-      justify-content: center;
-      gap: 3rem;
-      margin-top: 2rem;
-      flex-wrap: wrap;
-    }
-    
-    .stat {
-      text-align: center;
-      padding: 1rem;
-    }
-    
-    .stat-value {
-      font-size: 2rem;
-      font-weight: 700;
-      color: #2c3e50;
-      margin-bottom: 0.5rem;
-    }
-    
-    .stat-label {
-      font-size: 0.9rem;
-      color: #7f8c8d;
-      text-transform: uppercase;
-      letter-spacing: 1px;
     }
     
     @media (max-width: 768px) {
@@ -217,14 +176,6 @@ import { CommonModule } from '@angular/common';
       .cta-buttons {
         flex-direction: column;
         align-items: center;
-      }
-      
-      .stats {
-        gap: 1.5rem;
-      }
-      
-      .stat-value {
-        font-size: 1.5rem;
       }
     }
   `]

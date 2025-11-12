@@ -33,7 +33,3 @@ import { RouterOutlet } from '@angular/router';
   `]
 })
 export class App {}
-
-export const appConfig = {
-  // Add any app-wide configuration here
-};
