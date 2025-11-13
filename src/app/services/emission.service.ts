@@ -56,7 +56,7 @@ export class EmissionService {
             .map(e => e[field])
             .filter((v): v is string | number => v !== null && v !== undefined)
             .map(String)
-        )].sort()
+        )].sort((a, b) => a.localeCompare(b))
       ),
       catchError(() => of([]))
     );
